@@ -1,0 +1,15 @@
+<h3 mat-dialog-title>{{ title }}</h3>
+<div mat-dialog-content>
+    <p>{{ message }}</p>
+</div>
+<div mat-dialog-actions class="pt-24">
+    <div class="actions">
+        <button type="button" *ngIf="isCancelable" class="btn-small" mat-stroked-button color="warn"
+            (click)="onCancel()">
+            <mat-icon>close</mat-icon><span class="btn-label"> {{ textButtonCancel }}</span>
+        </button>
+        <button class="btn-small" mat-stroked-button color="accent" (click)="onSubmit()">
+            <mat-icon>send</mat-icon><span class="btn-label"> {{ textButton }}</span>
+        </button>
+    </div>
+</div>

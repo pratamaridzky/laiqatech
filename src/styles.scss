@@ -1,0 +1,79 @@
+// Import Fuse core library
+@import "@fuse/scss/core";
+
+// Import app.theme.scss
+@import "app/app.theme";
+
+@import "@fuse/scss/fuse";
+
+
+.elearning-dialog{
+  min-width: 100%;
+  height: auto;
+  @include media-breakpoint('gt-sm'){
+    min-width: 50%;
+  }
+  @include media-breakpoint('gt-lg'){
+    min-width: 30%;
+  }
+}
+
+.elearning-dialog-half{
+  min-width: 100%;
+  height: auto;
+  @include media-breakpoint('gt-sm'){
+    min-width: 70%;
+  }
+  @include media-breakpoint('gt-lg'){
+    min-width: 50%;
+  }
+}
+
+form.evaluation-form {
+  .mat-form-field-wrapper {
+      // transform: scale(0.8);
+      font-size: 0.8em !important;
+  }
+}
+
+div.table-container {
+  max-height: 50vh;
+  width: 100%;
+  overflow: auto;
+
+  mat-icon {
+      transform: scale(0.7);
+  }
+}
+
+table.evaluation-table {
+  overflow-x: scroll;
+  // width: 100%;
+  min-width: 100%;
+  tr {
+      th {
+          text-transform: uppercase;
+          font-size: 10px;
+          font-weight: 700;
+          word-wrap: none !important;
+          white-space: nowrap !important;
+          padding: 0.75rem 1rem;
+          // background-color: #0088d1 !important;
+          // color: #fff !important;
+      }
+      td {
+          font-size: 10px;
+          padding: 1rem;
+          word-wrap: break-word !important;
+          white-space: normal !important;
+      }
+  }
+}
+
+.search-input {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 14px;
+  min-width: 200px;
+}

@@ -1,0 +1,133 @@
+          <!-- CONTENT -->
+          <div class="content">
+
+              <mat-toolbar id="toolbar-content"
+                  color="white"
+                  fxLayout="row"
+                  fxLayoutAlign="start center">
+
+              <div fxLayout="row">
+                  <button (click)="openDialog(null)"
+                          matTooltip="Create"
+                          *ngIf="!toggleDelete"
+                          mat-icon-button
+                          color="primary">
+                      <mat-icon color="accent"
+                                  class="small">add_circle</mat-icon>
+                  </button>
+                  <div *ngIf="!toggleDelete"
+                          class="vertical-divider"></div>
+                  <button (click)="toggleDelete = !toggleDelete; deleteToggle.next(toggleDelete)"
+                          *ngIf="!toggleDelete"
+                          matTooltip="Delete"
+                          mat-icon-button
+                          color="warn">
+                      <mat-icon color="warn"
+                                  class="small">remove_circle</mat-icon>
+                  </button>
+
+                  <div *ngIf="!toggleDelete" class="vertical-divider"></div>
+                  <!-- <button *ngIf="toggleDelete"
+                          matTooltip="Apply Delete"
+                          [disabled]="selection.selected.length == 0"
+                          class="btn-small"
+                          (click)="deleteAction()"
+                          mat-stroked-button
+                          color="primary">
+                      <mat-icon color="primary">check</mat-icon><span class="btn-label"> APPLY</span>
+                  </button> -->
+                  
+                  <div *ngIf="toggleDelete" class="vertical-divider"></div>
+                  <button *ngIf="toggleDelete"
+                          matTooltip="Cancel Delete"
+                          (click)="toggleDelete = !toggleDelete; deleteToggle.next(toggleDelete)"
+                          class="btn-small"
+                          mat-stroked-button
+                          color="warn">
+                      <mat-icon color="warn">close</mat-icon><span class="btn-label"> CANCEL</span>
+                  </button>
+              </div>
+              </mat-toolbar>
+
+              <div *ngIf="(dataSource.loadingSubject | async)">
+                  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+              </div>
+
+              <mat-table class="orders-table"
+                          #table [dataSource]="dataSource"
+                          matSort
+                          [@animateStagger]="{value:'50'}"
+                          fusePerfectScrollbar>
+
+                          <ng-container matColumnDef="select" *ngIf="toggleDelete">
+                              <mat-header-cell fxFlex
+                                  *matHeaderCellDef>
+                                  <mat-checkbox *ngIf="toggleDelete"
+                                                  (change)="$event ? masterToggle() : null"
+                                                  [checked]="selection.hasValue() && isAllSelected()"
+                                                  [indeterminate]="selection.hasValue() && !isAllSelected()">
+                                  </mat-checkbox>
+                              </mat-header-cell>
+
+                              <mat-cell fxFlex
+                                  *matCellDef="let row">
+                                  <mat-checkbox *ngIf="toggleDelete"
+                                                  (click)="$event.stopPropagation()"
+                                                  (change)="$event ? selection.toggle(row) : null"
+                                                  [checked]="selection.isSelected(row)">
+                                  </mat-checkbox>
+                              </mat-cell>
+                          </ng-container>
+
+                          <ng-container matColumnDef="description">
+                              <mat-header-cell fxFlex="70"
+                                  *matHeaderCellDef>
+                                  Description
+                              </mat-header-cell>
+
+                              <mat-cell fxFlex="70"
+                                  *matCellDef="let element">
+                                  {{ element.description }}
+                              </mat-cell>
+                          </ng-container>
+                          
+                          <ng-container matColumnDef="is_active">
+                              <mat-header-cell fxFlex="10"
+                                  *matHeaderCellDef>
+                                  Status
+                              </mat-header-cell>
+
+                              <mat-cell fxFlex="10"  *matCellDef="let element">
+                                  <span *ngIf="element.is_active=='1'">Active</span>
+                                  <span *ngIf="element.is_active=='0'">Non Active</span>
+                              </mat-cell>
+                          </ng-container>
+
+                          <ng-container matColumnDef="action" stickyEnd >
+                              <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex>Action</mat-header-cell>
+                              <mat-cell *matCellDef="let element" fxFlex>
+                                  <button mat-icon-button
+                                          (click)="openDialog(element)"
+                                          color="primary">
+                                      <mat-icon color="accent">edit</mat-icon>
+                                  </button>
+                                </mat-cell>
+                          </ng-container>
+
+                          <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                          <mat-row *matRowDef="let row; columns: displayedColumns;"
+                                  class="order"
+                                  matRipple>
+                          </mat-row>
+
+              </mat-table>
+
+              <mat-paginator [length]="dataSource?.pagination.value.iTotalRecords"
+                          [pageSize]="page?.limit"
+                          [pageSizeOptions]="[1, 5, 10, 20, 30]"
+                          color='red'>
+              </mat-paginator>
+
+          </div>
+          <!-- / CONTENT -->

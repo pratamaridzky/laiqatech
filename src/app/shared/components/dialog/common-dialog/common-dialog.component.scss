@@ -1,0 +1,10 @@
+div.actions {
+    display: flex;
+    flex: 1 0 auto;
+    text-align: right;
+    align-items: center;
+    justify-content: flex-end;
+    button {
+        margin-left: 1em; 
+    }
+}
