@@ -60,9 +60,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     request.subscribe(
         data => {
-            if (data && data.token) {
+            if (data.title == 'Success') {
                 this.splasScreen.show();
-                this.authService.setToken(data.token);
+                this.authService.setToken(data.data.token);
                 setTimeout(() => {
                     this.router.navigate(['master']);
                 }, 2000);

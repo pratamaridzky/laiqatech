@@ -5,7 +5,7 @@ export class ApiResponse {
     message = 'Request Canceled';
     data: any;
 
-    constructor(options?: { title: string; message: string; data?: any }) {
+    constructor(options?: { title?: string; message: string; data?: any }) {
         if (typeof options !== 'undefined') {
             Object.keys(options).forEach(key => {
                 this[key] = options[key];

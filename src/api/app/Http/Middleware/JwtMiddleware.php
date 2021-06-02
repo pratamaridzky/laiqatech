@@ -18,7 +18,7 @@ class JwtMiddleware extends BaseMiddleware
                 return response()->json([
                     'data' => null,
                     'status' => false,
-                    'err_' => [
+                    'err' => [
                         'message' => 'Token Invalid',
                         'code' => 1
                     ]
@@ -27,16 +27,16 @@ class JwtMiddleware extends BaseMiddleware
                 return response()->json([
                     'data' => null,
                     'status' => false,
-                    'err_' => [
+                    'err' => [
                         'message' => 'Token Is Expired',
                         'code' => 1
                     ]
-                ]);
+                    ], 401);
             }else{
-                return response()->json([
+                return response(401)->json([
                     'data' => null,
                     'status' => false,
-                    'err_' => [
+                    'err' => [
                         'message' => 'Authorization Token not found',
                         'code' => 1
                     ]

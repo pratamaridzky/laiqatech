@@ -14,19 +14,21 @@ class CreateSubAreasTable extends Migration
     public function up()
     {
         Schema::create('sub_areas', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('companie_id')->unsigned();
+            $table->increments('id');
+            $table->integer('area_id')->unsigned();
             $table->string('description', 150);
             $table->text('address');
             $table->string('phone1', 15);
-            $table->string('phone2', 15);
-            $table->string('email', 100);
-            $table->enum('is_active', ['0', '1']);
+            $table->string('phone2', 15)->nullable();
+            $table->string('email', 100);         
+            $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('companie_id')
+            $table->index('description');
+
+            $table->foreign('area_id')
                 ->references('id')
-                ->on('companies')
+                ->on('areas')
                 ->onDelete('cascade');
         });
     }

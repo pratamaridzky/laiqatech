@@ -23,12 +23,11 @@ export class BrandService {
     private storage: StorageService
   ) { 
     this.name = storage.get('name');
-    this.apiEndpoint = this.appSettings.getApiEndpoint('brands');
+    this.apiEndpoint = this.appSettings.getApiEndpoint('brand');
   }
 
   loadData(page:PaginationPage):Observable<Pagination<Brands>>{
     let httpParams = new HttpParams();
-    httpParams = httpParams.append('action', 'test');
 
     Object.keys(page).forEach(item=>{
       httpParams = httpParams.append(item, page[item]);

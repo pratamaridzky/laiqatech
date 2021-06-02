@@ -40,12 +40,12 @@ export class FormBrandComponent implements OnInit, OnDestroy {
     if (this.isEdit) {
       this.form = this.formBuilder.group({
         id: new FormControl(this.data.id),
-        is_active: new FormControl(this.data.is_active, Validators.required),
+        // is_active: new FormControl(this.data.is_active, Validators.required),
         description: new FormControl(this.data.description, Validators.required),
       })
     } else {
       this.form = this.formBuilder.group({
-        is_active: new FormControl('', Validators.required),
+        // is_active: new FormControl('', Validators.required),
         description: new FormControl('', Validators.required),
       })
     }
@@ -56,14 +56,4 @@ export class FormBrandComponent implements OnInit, OnDestroy {
     this.unsubscribeAll.complete();
   }
 
-  onSubmit():void{
-    const payload = {
-      is_active: this.form.value.is_active,
-      description:this.form.value.description
-    };
-
-    this.brandService.createData(payload).subscribe(response => {
-      this.dialogRef.close(new DialogEvent('submit', response));
-    });
-  }
 }

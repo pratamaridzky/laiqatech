@@ -14,7 +14,7 @@ export const locale = {
             },
 
             'MASTER': {
-                'TITLE':'Master Data'
+                'TITLE':'Master'
             }
 
         }

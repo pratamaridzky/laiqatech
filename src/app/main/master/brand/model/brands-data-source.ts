@@ -36,9 +36,9 @@ export class BrandsDataSource implements DataSource<Brands>{
         .subscribe((data:Pagination<Brands>)=>{
           this.subject.next(data.data);
           this.pagination.next({
-            iTotalDisplayRecords:data.meta.to,
-            iTotalRecords:data.meta.total
+            iTotalDisplayRecords:data.to,
+            iTotalRecords:data.total
           });
-        });
+        });   
   }
 }

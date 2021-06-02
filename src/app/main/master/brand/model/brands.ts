@@ -1,5 +1,12 @@
+import { Category } from "../../category/model/category";
+
 export class Brands {
   id?:number;
+  categorie_id:number;
+  categorie:Category;
+  name:string;
   description:string;
-  is_active:string;
+  create_at:string;
+  update_at:string;
+  deleted_at:string;
 }

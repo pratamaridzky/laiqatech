@@ -14,14 +14,15 @@ class CreateCategoriesTable extends Migration
     public function up()
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('description', 150);
-            $table->bigInteger('self_parent_id')->unsigned();
-            $table->string('flag_app', 200);
-            $table->enum('is_active', ['0', '1']);
+            $table->increments('id');
+            $table->string('name', 100);
+            $table->string('description', 200);
+            $table->integer('self_parent_id')->unsigned()->nullable();
+            $table->string('flag_app', 120);
+            $table->softDeletes();
             $table->timestamps();
 
-            $table->unique(['description', 'flag_app'], 'idx_desc');
+            $table->unique(['name', 'flag_app'], 'idx_desc');
         });
     }
 

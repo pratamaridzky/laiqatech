@@ -46,6 +46,7 @@ export class MasterComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.splaceScreen.hide();
+    this.toCompany();
   }
 
   toggleSidebar(name): void
@@ -62,12 +63,24 @@ export class MasterComponent implements OnInit, OnDestroy {
     this.router.navigate(["master/brand"]);
   }
 
+  toCompany():void{
+    this.router.navigate(["master/company"]);
+  }
+
   toType(): void {
     this.router.navigate(["master/type"]);
   }
 
-  toTransmission(): void {
-    this.router.navigate(["master/transmission"]);
+  toSubarea(): void {
+    this.router.navigate(["master/sub-area"]);
+  }
+
+  toArea(): void {
+    this.router.navigate(["master/area"]);
+  }
+
+  toCategory():void{
+    this.router.navigate(["master/category"]);
   }
 
   toLocation(): void {

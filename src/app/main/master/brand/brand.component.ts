@@ -29,7 +29,7 @@ export class BrandComponent implements OnInit, OnDestroy, AfterViewInit {
   page = new PaginationPage;
   dataSource:BrandsDataSource;
   searchTextSubject = new Subject<any>();
-  displayedColumns = ["description", "is_active", "action"];
+  displayedColumns = ["name", "category", "description", "delete_at", "action"];
   helper = new Helper();
   selection = new SelectionModel<Brands>(true, []);
 
@@ -70,7 +70,7 @@ export class BrandComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   
   loadData():void{
-    this.page.page = this.paginator.pageIndex;
+    this.page.page = this.paginator.pageIndex+1;
     this.page.limit = this.paginator.pageSize;
     this.dataSource.loadData(this.page);
     this.selection.clear();

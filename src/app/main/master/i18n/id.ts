@@ -8,6 +8,10 @@ export const locale = {
       'TYPE': 'Tipe',
       'LOCATION': 'Lokasi',
       'TRANSMISSION': 'Transmisi',
+      'COMPANY':'Perusahaan',
+      'AREA':'Daerah',
+      'SUBAREA':'Sub Area',
+      'CATEGORY':'Kategori'
     }
   }
 }

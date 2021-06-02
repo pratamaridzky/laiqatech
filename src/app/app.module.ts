@@ -27,6 +27,7 @@ import { AuthService } from './shared/auth/auth.service';
 import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import { Error404Component } from './shared/components/error404/error404.component';
 import { LoginModule } from './main/login/login.module';
+import { CommonDialogModule } from './shared/components/dialog/common-dialog/common-dialog.module';
 
 export function tokenGetter():any {
     return localStorage.getItem('token');   
@@ -91,7 +92,8 @@ const appRoutes: Routes = [
         LayoutModule,
         SampleModule,
         MasterModule,
-        LoginModule
+        LoginModule,
+        CommonDialogModule,
     ],
     providers:[
         AuthService,

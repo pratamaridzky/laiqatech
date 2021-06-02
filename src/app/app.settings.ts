@@ -3,7 +3,7 @@ export class AppSettings {
         appName: "Laiqa Tech",
         appDesc: "App belum jelas",
         appVers: "1.0",
-        baseURL: "http://localhost/laiqatech/src/api/",
+        baseURL: "http://localhost/laiqatech/src/api/api/",
         imageURL: "http://hcportal.nabatisnack.co.id/api/empdocument/"
     };
 
@@ -14,8 +14,11 @@ export class AppSettings {
      */
     private apiEndpoint(key: string): any {
         const endpoint = {
-            auth: "/login",
-            brands: "/brands",
+            auth: "auth",
+            company:"company",
+            brand:"brand",
+            area:"area",
+            subarea:"subarea"
         };
         return endpoint[key];
     }

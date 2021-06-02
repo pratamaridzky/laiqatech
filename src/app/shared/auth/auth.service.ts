@@ -32,7 +32,7 @@ export class AuthService {
      */
     public login(username: string, password: string): Observable<Auth> {
         return this.http.post<Auth>(
-            this.settings.getApiEndpoint('auth'),
+            this.settings.getApiEndpoint('auth') + '/login',
             {
                 username: username,
                 password: password,
@@ -137,10 +137,9 @@ export class AuthService {
      */
     public refreshToken(): Observable<any> {
         return this.http.post<any>(
-            this.settings.getApiEndpoint('auth') + '/refreshToken',
+            this.settings.getApiEndpoint('auth') + '/refresh',
             {
-                tokenID: this.storage.get('tokenID'),
-                appID: 'evaluation'
+                tokenID: this.storage.get('tokenID')
             }
         );
     }

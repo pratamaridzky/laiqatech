@@ -14,9 +14,10 @@ class CreateCompaniesTable extends Migration
     public function up()
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->id();
-            $table->string('description', 150)->index('description', 'idx_description');
-            $table->enum('is_active', ['0', '1']);
+            $table->increments('id');
+            $table->string('code', 3)->unique();
+            $table->string('description', 150)->index('description', 'idx_description');         
+            $table->softDeletes();
             $table->timestamps();
         });
     }

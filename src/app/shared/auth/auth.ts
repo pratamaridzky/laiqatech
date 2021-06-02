@@ -70,6 +70,6 @@ export class Profiles {
 }
 
 export interface Auth {
-    token: string;
-    type: string;
+    data:any;
+    title:string;
 }

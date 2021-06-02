@@ -2,12 +2,15 @@
 
 namespace App\models\master;
 
+use App\Models\master\Area;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SubArea extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
-        'companie_id', 
+        'area_id', 
         'description', 
         'is_active', 
         'address', 
@@ -16,8 +19,21 @@ class SubArea extends Model
         'email'
     ];
 
-    public function companie()
+    // protected $appends = ['status_label'];
+
+    public function area()
     {
-        return $this->belongsTo(Companie::class);
+        return $this->belongsTo(Area::class);
     }
+
+
+    /* public function getStatusLabelAttribute()
+    {
+        $rs = 'Non Active';
+        if ($this->is_active == '1') {
+            $rs = 'Active';
+        }
+        return $rs;
+    } */
+
 }

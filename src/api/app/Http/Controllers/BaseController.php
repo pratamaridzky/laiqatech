@@ -9,9 +9,9 @@ class BaseController extends Controller
     public function sendResponse($result, $message)
     {
         $response =[
-            'success' => true,
+            'title'   => 'Success',
             'data'    => $result,
-            'message' => $message
+            'message' => $message,
         ];
         return response()->json($response, 200);
     }
@@ -19,7 +19,7 @@ class BaseController extends Controller
     public function sendError($error, $errorMessage = [], $code= 404)
     {
         $response = [
-            'success' => false,
+            'title' => "Failed",
             'message' => $error,
         ];
 
@@ -27,5 +27,18 @@ class BaseController extends Controller
             $response['data'] = $errorMessage;
         }
         return response()->json($response, $code);
+    }
+
+    public function sendResponseView($result, $message)
+    {
+        $data = $result->toArray();
+        $response =[
+            'success' => true,
+            'message' => $message,
+            'data' => $data['data'],
+            'to'=>$data['to'],
+            'total'=>$data['total']
+        ];
+        return response()->json($response, 200);
     }
 }

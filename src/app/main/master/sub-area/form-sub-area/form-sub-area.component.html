@@ -1,0 +1,143 @@
+<h1 mat-dialog-title>Sub Area Form</h1>
+<div mat-dialog-content>
+    <form class="evaluation-form" novalidate [formGroup]="form">
+        <div fxLayout="column" fxFlex fxFlexFill>
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="5px">
+                <mat-form-field fxFlex appearance="outline">
+                    <mat-label>Company</mat-label>
+                    <mat-select formControlName="companie_id" required (ngModelChange)="getArea()">
+                        <mat-select-filter [array]="listCompany" (filteredReturn)="filteredCompany = $event"
+                            [displayMember]="'description'"></mat-select-filter>
+        
+                        <mat-option *ngFor="let rs of filteredCompany" [value]="rs.id">
+                            {{rs.description}}
+                        </mat-option>
+                    </mat-select>
+                    
+                    <mat-error *ngIf="form.get('companie_id').hasError('required')">
+                    Company is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxFlex appearance="outline">
+                <mat-label>Area</mat-label>
+                <mat-select formControlName="area_id" required>
+                    <mat-select-filter [array]="listArea" (filteredReturn)="filteredArea = $event"
+                        [displayMember]="'description'"></mat-select-filter>
+    
+                    <mat-option *ngFor="let rs of filteredArea" [value]="rs.id">
+                        {{rs.description}}
+                    </mat-option>
+                </mat-select>
+                
+                <mat-error *ngIf="form.get('area_id').hasError('required')">
+                    Area is required
+                </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutGap="5px">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Sub Area</mat-label>
+                    <input matInput type="text" formControlName="description" required>
+
+                    <mat-error *ngIf="form.get('description').hasError('required')">
+                        Sub area is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutGap="5px">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Address</mat-label>
+
+                    <textarea matInput formControlName="address" required>
+                    </textarea>
+
+                    <mat-error *ngIf="form.get('address').hasError('required')">
+                        Address is required
+                    </mat-error>
+                </mat-form-field>            
+            </div>
+
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="5px">            
+                <mat-form-field appearance="outline" fxFlex="20">
+                    <mat-label>Phone 1</mat-label>
+                    <input matInput type="text" formControlName="phone1" required>
+
+                    <mat-error *ngIf="form.get('phone1').hasError('required')">
+                        Phone 1 is required
+                    </mat-error>
+
+                    <mat-error *ngIf="form.get('phone1').hasError('minlength')">
+                        Minimum length 7 character
+                    </mat-error>
+                    
+                    <mat-error *ngIf="form.get('phone1').hasError('maxlength')">
+                    Minimum length 13 character
+                    </mat-error>
+                </mat-form-field>
+          
+                <mat-form-field appearance="outline" fxFlex="20">
+                    <mat-label>Phone 2</mat-label>
+                    <input matInput type="text" formControlName="phone2">
+
+                    <mat-error *ngIf="form.get('phone2').hasError('minlength')">
+                        Minimum length 7 character
+                    </mat-error>
+                    
+                    <mat-error *ngIf="form.get('phone2').hasError('maxlength')">
+                    Minimum length 13 character
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="60">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="text" formControlName="email" required>
+                    
+                    <mat-error *ngIf="form.get('email').hasError('required')">
+                    Email is required
+                    </mat-error>
+                    
+                    <mat-error *ngIf="form.get('email').hasError('email')">
+                    Email must be a valid email address
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="5px">
+                <mat-form-field appearance="outline" fxFlex *ngIf="isEdit">
+                    <mat-label>Created at</mat-label>
+                    <input matInput [matDatepicker]="startDate" formControlName='created_at'>
+                    <mat-datepicker-toggle matSuffix [for]="startDate" disabled></mat-datepicker-toggle>
+                    <mat-datepicker #startDate></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex *ngIf="isEdit">
+                    <mat-label>Deleted at</mat-label>
+                    <input matInput [matDatepicker]="startDate" formControlName='deleted_at'>
+                    <mat-datepicker-toggle matSuffix [for]="startDate" disabled></mat-datepicker-toggle>
+                    <mat-datepicker #startDate></mat-datepicker>
+                </mat-form-field>
+            </div>    
+        </div>
+    </form>
+</div>
+
+<div mat-dialog-actions>
+    <div fxFlex="100%" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="2%">
+        <button class="btn-small" mat-flat-button color="warn" (click)="null" mat-button mat-dialog-close [disabled]="isLoading">
+            <mat-icon>close</mat-icon><span class="btn-label"> CANCEL</span>
+        </button>
+
+        <button *ngIf="!isEdit" class="btn-small" mat-flat-button color="accent" (click)="onSubmit()"
+            [disabled]="form.invalid||isLoading">
+            <mat-icon>send</mat-icon><span class="btn-label"> SUBMIT</span>
+        </button>
+
+        <button *ngIf="isEdit" class="btn-small" mat-flat-button color="accent" (click)="onUpdate()"
+            [disabled]="form.invalid || form.pristine||isLoading">
+            <mat-icon>send</mat-icon><span class="btn-label"> UPDATE</span>
+        </button>
+    </div>
+</div>

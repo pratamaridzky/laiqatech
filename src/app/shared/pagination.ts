@@ -1,17 +1,19 @@
 export class Pagination<T> {
     data: Array<T>;
-    meta:any;    
-    iTotalDisplayRecords: number;
-    iTotalRecords: number;
+    to: number;
+    total: number;
+    current_page:number;
 
     constructor(
         data: Array<T> = new Array<T>(),
-        iTotalDisplayRecords: number = 0,
-        iTotalRecords: number = 0
+        to: number = 0,
+        total: number = 0,
+        current_page:number =1,
     ) {
         this.data = data;
-        this.iTotalDisplayRecords = iTotalDisplayRecords;
-        this.iTotalRecords = iTotalRecords;
+        this.to = to;
+        this.total = total;
+        this.current_page = current_page;
     }
 }
 
@@ -34,4 +36,24 @@ export class PaginationPage {
     limit = 10;
     page = 0;
     search ? = '';
+}
+
+export class Paginate<T>{
+    ds?:Array<T>;
+    data:any;
+    message:string;
+    success:boolean;
+
+    constructor(
+        data:any=[],
+        message:string="",
+        success:boolean=false
+    ){
+        console.log(data);
+        
+        this.data = data;
+        this.message = message;
+        this.success = success;
+        this.ds = data.data;
+    }
 }

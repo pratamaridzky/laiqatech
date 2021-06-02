@@ -14,12 +14,15 @@ class CreateTypesTable extends Migration
     public function up()
     {
         Schema::create('types', function (Blueprint $table) {
-            $table->id();            
-            $table->bigInteger('categorie_id')->unsigned();
-            $table->string('description', 150);
-            $table->enum('is_active', ['0', '1']);
+            $table->increments('id');            
+            $table->integer('categorie_id')->unsigned();
+            $table->string('name', 100);
+            $table->string('description', 150);         
+            $table->softDeletes();
             $table->timestamps();
 
+            $table->index('name');
+            
             $table->foreign('categorie_id')
                 ->references('id')
                 ->on('categories')

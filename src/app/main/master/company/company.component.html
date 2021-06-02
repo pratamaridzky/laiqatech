@@ -1,0 +1,195 @@
+<!-- CONTENT -->
+<div class="content">
+
+    <mat-toolbar id="toolbar-content"
+        color="white"
+        fxLayout="row"
+        fxLayoutAlign="start center">
+
+        <div fxLayout="row">
+            <button (click)="openDialog(null)"
+                    matTooltip="Create"
+                    *ngIf="!toggleDelete"
+                    mat-icon-button
+                    color="primary">
+                <mat-icon color="accent"
+                        class="small">add_circle</mat-icon>
+            </button>
+            
+            <div *ngIf="!toggleDelete"
+                    class="vertical-divider"></div>
+            <button (click)="toggleDelete = !toggleDelete; deleteToggle.next(toggleDelete)"
+                    *ngIf="!toggleDelete"
+                    matTooltip="Delete"
+                    mat-icon-button
+                    color="warn">
+                <mat-icon color="warn"
+                            class="small">remove_circle</mat-icon>
+            </button>
+
+            <div *ngIf="!toggleDelete" class="vertical-divider"></div>
+            <button *ngIf="toggleDelete"
+                    matTooltip="Apply Delete"
+                    [disabled]="selection.selected.length == 0"
+                    class="btn-small"
+                    (click)="deleteAction('deactive')"
+                    mat-stroked-button
+                    color="primary">
+                <mat-icon color="primary">block</mat-icon><span class="btn-label"> DELETE</span>
+            </button>
+
+            <button *ngIf="toggleDelete"
+                    matTooltip="Apply Delete"
+                    [disabled]="selection.selected.length == 0"
+                    class="btn-small"
+                    (click)="deleteAction('permanent')"
+                    mat-stroked-button
+                    fxHide fxShow.gt-sm
+                    color="primary">
+                <mat-icon color="warn">delete_forever</mat-icon><span class="btn-label">PERMANENT DELETE</span>
+            </button>
+            
+            <div *ngIf="toggleDelete" class="vertical-divider"></div>
+            <button *ngIf="toggleDelete"
+                    matTooltip="Cancel Delete"
+                    (click)="toggleDelete = !toggleDelete; deleteToggle.next(toggleDelete)"
+                    class="btn-small"
+                    mat-stroked-button
+                    color="warn">
+                <mat-icon color="accent">close</mat-icon><span class="btn-label"> CANCEL</span>
+            </button>
+
+        </div>
+
+    </mat-toolbar>
+
+    <mat-form-field class="mt-8" style="width:100%">
+        <input matInput placeholder="Search for company" (keyup.enter)="search(box.value)" #box fxFlex>
+    </mat-form-field>
+
+    <div *ngIf="(dataSource.loadingSubject | async)">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+
+    <mat-table #table [dataSource]="dataSource"
+                matSort
+                [@animateStagger]="{value:'50'}"
+                fusePerfectScrollbar>
+
+                <ng-container matColumnDef="select" *ngIf="toggleDelete">
+                    <mat-header-cell fxFlex
+                        *matHeaderCellDef>
+                        <mat-checkbox *ngIf="toggleDelete"
+                                        (change)="$event ? masterToggle() : null"
+                                        [checked]="selection.hasValue() && isAllSelected()"
+                                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+                        </mat-checkbox>
+                    </mat-header-cell>
+
+                    <mat-cell fxFlex
+                        *matCellDef="let row">
+                        <mat-checkbox *ngIf="toggleDelete"
+                                        (click)="$event.stopPropagation()"
+                                        (change)="$event ? selection.toggle(row) : null"
+                                        [checked]="selection.isSelected(row)">
+                        </mat-checkbox>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="code">
+                    <mat-header-cell fxFlex fxFlex.gt-sm="20"
+                        *matHeaderCellDef>
+                        Code
+                    </mat-header-cell>
+
+                    <mat-cell fxFlex fxFlex.gt-sm="20"
+                        *matCellDef="let element">
+                        {{ element.code }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="description">
+                    <mat-header-cell fxFlex fxFlex.gt-sm="50"
+                        *matHeaderCellDef>
+                        Description
+                    </mat-header-cell>
+
+                    <mat-cell fxFlex fxFlex.gt-sm="50"
+                        *matCellDef="let element">
+                        {{ element.description }}
+                    </mat-cell>
+                </ng-container>
+                
+                <ng-container matColumnDef="create_at">
+                    <mat-header-cell fxFlex fxHide fxShow.gt-sm 
+                        *matHeaderCellDef>
+                        Create Date
+                    </mat-header-cell>
+
+                    <mat-cell fxFlex fxHide fxShow.gt-sm *matCellDef="let element">
+                        {{element.created_at|date}}
+                    </mat-cell>
+                </ng-container>
+                
+                <ng-container matColumnDef="delete_at">
+                    <mat-header-cell fxFlex fxHide fxShow.gt-sm
+                        *matHeaderCellDef>
+                        Deactive Date
+                    </mat-header-cell>
+
+                    <mat-cell fxFlex fxHide fxShow.gt-sm *matCellDef="let element">
+                        {{element.deleted_at|date}}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="action" stickyEnd >
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex="7" fxHide fxShow.gt-sm>Action</mat-header-cell>
+                    <mat-cell *matCellDef="let element" fxFlex="7" fxHide fxShow.gt-sm>
+                        <button mat-icon-button
+                                *ngIf="!element.deleted_at"
+                                (click)="openDialog(element)"
+                                color="primary"
+                                matTooltip="Edit">
+                            <mat-icon color="accent">edit</mat-icon>
+                        </button>
+
+                        <button 
+                                *ngIf="element.deleted_at"
+                                mat-icon-button
+                                (click)="restore(element)"
+                                color="primary"
+                                matTooltip="Restore">
+                            <mat-icon color="warn">restore_from_trash</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+                <mat-row *matRowDef="let row; columns: displayedColumns;"
+                        class="order"
+                        (dblclick)="openDialog(row)"
+                        [@animate]="{value:'*',params:{y:'100%'}}"
+                        matRipple>
+                </mat-row>
+
+    </mat-table>
+
+    <mat-paginator [length]="dataSource?.pagination.value.iTotalRecords"
+                [pageSize]="page?.limit"
+                [pageSizeOptions]="[10, 20, 30]"
+                color='red'
+                fxHide fxShow.gt-sm
+                showFirstLastButtons=true>
+    </mat-paginator>
+
+    <mat-paginator [length]="dataSource?.pagination.value.iTotalRecords"
+                [pageSize]="page?.limit"
+                [pageSizeOptions]="[10, 20, 30]"
+                color='red'
+                fxHide.gt-sm fxShow
+                showFirstLastButtons=false>
+    </mat-paginator>
+
+</div>
+<!-- / CONTENT -->

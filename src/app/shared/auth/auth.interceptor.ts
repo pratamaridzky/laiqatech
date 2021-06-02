@@ -24,6 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
         request: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
+        // let action = request.params.get('action');        
         if (
             request.params.get('action') === 'auth/logout' ||
             request.params.get('action') === 'auth/refresh' ||
@@ -48,7 +49,7 @@ export class AuthInterceptor implements HttpInterceptor {
                                 })
                             );
                         } else {
-                            if (error.url.endsWith('refreshToken')) {
+                            if (error.url.endsWith('refresh')) {
                                 this.authService.logout();
                                 this.router.navigate(['login']);
                             }

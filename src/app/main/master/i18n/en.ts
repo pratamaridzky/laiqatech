@@ -8,6 +8,10 @@ export const locale = {
       'TYPE': 'Type',
       'LOCATION': 'Location',
       'TRANSMISSION': 'Transmission',
+      'COMPANY':'Company',
+      'AREA':'Area',
+      'SUBAREA':'Sub Area',
+      'CATEGORY':'Category'
     }
   }
 }

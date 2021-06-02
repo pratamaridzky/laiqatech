@@ -9,7 +9,6 @@ use Faker\Generator as Faker;
 $factory->define(Type::class, function (Faker $faker) {
     return [
         'description' => $faker->colorName,
-        'is_active' => '1',
         'categorie_id' => factory(Categorie::class),
     ];
 });

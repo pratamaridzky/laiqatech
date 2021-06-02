@@ -79,27 +79,50 @@
                               </mat-cell>
                           </ng-container>
 
+                          <ng-container matColumnDef="name">
+                              <mat-header-cell fxFlex
+                                  *matHeaderCellDef>
+                                  Name
+                              </mat-header-cell>
+
+                              <mat-cell fxFlex
+                                  *matCellDef="let element">
+                                  {{ element.name }}
+                              </mat-cell>
+                          </ng-container>
+
+                          <ng-container matColumnDef="category">
+                              <mat-header-cell fxFlex
+                                  *matHeaderCellDef>
+                                  Category
+                              </mat-header-cell>
+
+                              <mat-cell fxFlex
+                                  *matCellDef="let element">
+                                  {{ element.categorie.description }}
+                              </mat-cell>
+                          </ng-container>
+
                           <ng-container matColumnDef="description">
-                              <mat-header-cell fxFlex="70"
+                              <mat-header-cell fxFlex
                                   *matHeaderCellDef>
                                   Description
                               </mat-header-cell>
 
-                              <mat-cell fxFlex="70"
+                              <mat-cell fxFlex
                                   *matCellDef="let element">
                                   {{ element.description }}
                               </mat-cell>
                           </ng-container>
                           
-                          <ng-container matColumnDef="is_active">
+                          <ng-container matColumnDef="delete_at">
                               <mat-header-cell fxFlex="10"
                                   *matHeaderCellDef>
-                                  Status
+                                  Deactive Date
                               </mat-header-cell>
 
                               <mat-cell fxFlex="10"  *matCellDef="let element">
-                                  <span *ngIf="element.is_active=='1'">Active</span>
-                                  <span *ngIf="element.is_active=='0'">Non Active</span>
+                                  {{element.delete_at}}
                               </mat-cell>
                           </ng-container>
 
@@ -125,8 +148,9 @@
 
               <mat-paginator [length]="dataSource?.pagination.value.iTotalRecords"
                           [pageSize]="page?.limit"
-                          [pageSizeOptions]="[1, 5, 10, 20, 30]"
-                          color='red'>
+                          [pageSizeOptions]="[1, 10, 20, 30]"
+                          color='red'
+                          showFirstLastButtons=true>
               </mat-paginator>
 
           </div>
